@@ -1,7 +1,7 @@
 Postmortem: API Gateway Outage
 
 Links
-Detailed Postmortem Report (Google Docs): https://docs.google.com/document/d/1UO3nmoETh7ZG7PtqdaCbBAUsxAPkucV1u320ok_rl5U/edit?usp=sharing
+Detailed Postmortem Report: https://docs.google.com/document/d/1UO3nmoETh7ZG7PtqdaCbBAUsxAPkucV1u320ok_rl5U/edit?usp=sharing
 Advanced funny Postmortem on Medium: https://medium.com/@mohamedev/firsttt-postmortem-how-a-typo-crashed-our-api-gateway-and-my-sanity-057670092afa
 
 Summary
