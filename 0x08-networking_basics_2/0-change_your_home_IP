@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
-# This script modifies /etc/hosts so localhost resolves to 127.0.0.2 and facebook.com to 8.8.8.8
+# Configure localhost to resolve to 127.0.0.2 and facebook.com to 8.8.8.8 in /etc/hosts
 
-tmp_file=$(mktemp)
+hosts_file="/etc/hosts"
+temp_hosts="$HOME/hosts.new"
 
-# Copy current hosts to tmp_file
-cat /etc/hosts > "$tmp_file"
+# Copy /etc/hosts to temp file
+cp "$hosts_file" "$temp_hosts"
 
-# Remove any line containing 'localhost' or 'facebook.com'
-sed -i '/localhost/d' "$tmp_file"
-sed -i '/facebook.com/d' "$tmp_file"
+# Remove lines containing localhost or facebook.com
+grep -vE 'localhost|facebook.com' "$temp_hosts" > "${temp_hosts}.tmp" && mv "${temp_hosts}.tmp" "$temp_hosts"
 
-# Append exactly what the test expects
-echo -e "127.0.0.2\tlocalhost" >> "$tmp_file"
-echo -e "8.8.8.8\tfacebook.com" >> "$tmp_file"
+# Append the required lines with tabs for spacing
+echo -e "127.0.0.2\tlocalhost" >> "$temp_hosts"
+echo -e "8.8.8.8\tfacebook.com" >> "$temp_hosts"
 
-# Replace /etc/hosts with tmp_file
-sudo mv "$tmp_file" /etc/hosts
+# Overwrite /etc/hosts using cat (safe in Docker)
+sudo sh -c "cat $temp_hosts > $hosts_file"
+
+# Clean up temp file
+rm "$temp_hosts"
